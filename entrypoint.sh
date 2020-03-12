@@ -109,8 +109,10 @@ if [[ -z "$BASE_BRANCH" ]]; then
   exit 1
 fi
 
-HEAD_REPO=$(echo "$pr_resp" | jq -r .head.repo.full_name)
-HEAD_BRANCH=$(echo "$pr_resp" | jq -r .head.ref)
+# HEAD_REPO=$(echo "$pr_resp" | jq -r .head.repo.full_name)
+# HEAD_BRANCH=$(echo "$pr_resp" | jq -r .head.ref)
+HEAD_REPO=$(jq -r ".pull_request.head.repo.full_name" "$GITHUB_EVENT_PATH")
+HEAD_BRANCH=$(jq -r ".pull_request.head.ref" "$GITHUB_EVENT_PATH")
 
 echo "Base branch for PR #$PR_NUMBER is $BASE_BRANCH"
 
@@ -136,7 +138,7 @@ gofmt -w .
 git commit -a -m"go format code"
 
 # push back
-git push --force-with-lease fork $HEAD_BRANCH
+git push fork $HEAD_BRANCH
 
 
 exit $SUCCESS
