@@ -139,7 +139,7 @@ git commit -a -m"go format code"
 
 # push back
 git checkout -b $HEAD_BRANCH
-git push fork $HEAD_BRANCH
+git push --force-with-lease fork $HEAD_BRANCH
 
 
 exit $SUCCESS
