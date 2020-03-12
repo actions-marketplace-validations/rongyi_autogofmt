@@ -1,2 +1,6 @@
 name: 'gofmtry'
 description: 'auto gofmt code'
+runs:
+  using: docker
+  main: entrypoint.sh
+  post: entrypoint.sh
