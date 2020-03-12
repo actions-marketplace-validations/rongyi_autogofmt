@@ -1,6 +1,10 @@
-name: 'gofmtry'
-description: 'auto gofmt code'
+name: 'Container Action Template'
+description: 'Get started with Container actions'
+author: 'GitHub'
+inputs:
+  myInput:
+    description: 'Input to use'
+    default: 'world'
 runs:
-  using: docker
-  main: entrypoint.sh
-  post: entrypoint.sh
+  using: 'docker'
+  image: 'Dockerfile'
