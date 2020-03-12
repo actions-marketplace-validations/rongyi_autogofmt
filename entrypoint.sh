@@ -132,7 +132,7 @@ set -o xtrace
 # # do the rebase
 # git checkout -b $HEAD_BRANCH fork/$HEAD_BRANCH
 # git rebase origin/$BASE_BRANCH
-gofmt -w
+gofmt -w .
 git commit -a -m"go format code"
 
 # push back
