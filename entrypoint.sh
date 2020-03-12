@@ -64,7 +64,7 @@ fi
 #   curl -s -S -H "Authorization: token $GITHUB_TOKEN" --header "Content-Type: application/json" --data "$PAYLOAD" "$COMMENTS_URL" > /dev/null
 # fi
 
-PR_NUMBER=$(jq -r ".issue.number" "$GITHUB_EVENT_PATH")
+PR_NUMBER=$(jq -r ".number" "$GITHUB_EVENT_PATH")
 echo "Collecting information about PR #$PR_NUMBER of $GITHUB_REPOSITORY..."
 
 if [[ -z "$GITHUB_TOKEN" ]]; then
@@ -82,7 +82,7 @@ pr_resp=$(curl -X GET -s -H "${AUTH_HEADER}" -H "${API_HEADER}" \
 BASE_REPO=$(echo "$pr_resp" | jq -r .base.repo.full_name)
 BASE_BRANCH=$(echo "$pr_resp" | jq -r .base.ref)
 
-USER_LOGIN=$(jq -r ".comment.user.login" "$GITHUB_EVENT_PATH")
+USER_LOGIN=$(jq -r ".pull_request.base.user.login" "$GITHUB_EVENT_PATH")
 
 user_resp=$(curl -X GET -s -H "${AUTH_HEADER}" -H "${API_HEADER}" \
             "${URI}/users/${USER_LOGIN}")
@@ -123,7 +123,7 @@ git remote set-url origin https://x-access-token:$COMMITTER_TOKEN@github.com/$GI
 git config --global user.email "$USER_EMAIL"
 git config --global user.name "$USER_NAME"
 
-git remote add fork https://x-access-token:$GITHUB_TOKEN@github.com/$HEAD_REPO.git
+git remote add fork https://x-access-token:$COMMITTER_TOKEN@github.com/$HEAD_REPO.git
 
 set -o xtrace
 
